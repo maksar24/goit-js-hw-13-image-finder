@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /goit-js-hw-13-image-finder/",
-    "deploy": "main -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "author": "Maksym Leskovets <leskovecmaksim@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https:///maksar24.github.io/goit-js-hw-13-image-finder/issues"
+    "url": "https://maksar24.github.io/goit-js-hw-13-image-finder/issues"
   },
   "devDependencies": {
     "@pnotify/core": "^5.2.0",
@@ -28,6 +28,7 @@
     "sass": "^1.32.8"
   },
   "dependencies": {
+    "basiclightbox": "^5.0.4",
     "handlebars": "^4.7.7",
     "lodash.debounce": "^4.0.8"
   }
