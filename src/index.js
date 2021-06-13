@@ -4,19 +4,24 @@ import { notice } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import listPictures from './partials/list_pictures.hbs';
 import { getAPI } from './js/apiService.js'
+const basicLightbox = require('basiclightbox')
 
 const refs = {
     input: document.querySelector('input'),
-    gallery: document.querySelectorAll('.gallery'),
-    loadMoreBtn: document.querySelectorAll('.button-load-more')
+    gallery: document.querySelector('.gallery'),
+    sentinel: document.querySelector('.observer'),
 };
 
-let page = 1;
+let page = 0;
+
+const options = {
+  rootMargin: '100px'
+};
 
 refs.input.addEventListener("input", debounce(onSearch, 500));
-// refs.loadMoreBtn.addEventListener('click', onLoadMore())
+refs.gallery.addEventListener("click", onClick);
 
-
+const observer = new IntersectionObserver(onEntry, options);
 
 function onSearch(e) {
     const searchQuery = refs.input.value.trim();
@@ -24,6 +29,7 @@ function onSearch(e) {
     if (searchQuery.length === 0) {
     refs.gallery.innerHTML = "";
     document.body.style.overflow = "hidden";
+    observer.unobserve(refs.sentinel);
     return;
   }
 
@@ -31,16 +37,20 @@ function onSearch(e) {
   page = 1;
   document.body.style.overflow = "auto";
   onFetchHandler(searchQuery, page);
+  observer.observe(refs.sentinel);
 };
 
 function addCollection(res) {
-    const picturesMarkup = listPictures(res.hits);
-    refs.gallery.innerHTML = picturesMarkup;
-    console.log(res.hits)
+  refs.gallery.insertAdjacentHTML("beforeend", listPictures(res));
 };
 
-async function onFetchHandler(query, page) {
+function onEntry() {
+  const searchQuery = refs.input.value.trim();
+  page += 1;
+  onFetchHandler(searchQuery, page);
+}
 
+async function onFetchHandler(query, page) {
     const getPictures = await getAPI(query, page);
     addCollection(getPictures);
 
@@ -50,9 +60,16 @@ async function onFetchHandler(query, page) {
         delay: 2000,
       });
       return;
-    }
-}
+    };
+};
 
-function onLoadMore(e) {
+function onClick(e) {
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
 
+  const instance = basicLightbox.create(`<img src="${e.target.dataset.large}" alt="${e.target.alt}">`);
+
+  instance.show();
+  console.log(e.target.dataset.large)
 };

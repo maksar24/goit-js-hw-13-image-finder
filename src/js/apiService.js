@@ -1,13 +1,13 @@
 export const getAPI = async (query, page) => {
-    const apiData = {
-        authorization: '22033849-04a58a8d7b6d53f5d68e2165a',
-        collection: 12,
-    };
+    const apiData = new URLSearchParams({
+        image_type: 'photo&orientation=horizontal',
+        q: query,
+        page: page,
+        per_page: 12,
+        key: '22033849-04a58a8d7b6d53f5d68e2165a',
+    });
     
-    const url =
-        `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${query}&page=${page}&per_page=${apiData.collection}&key=${apiData.authorization}`;
-    
-        
+    const url = `https://pixabay.com/api/?${apiData}`
     const res = await fetch(url);
     return await res.json();
 }
