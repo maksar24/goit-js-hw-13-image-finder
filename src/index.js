@@ -3,8 +3,9 @@ import debounce from 'lodash.debounce';
 import { notice } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import listPictures from './partials/list_pictures.hbs';
-import { getAPI } from './js/apiService.js'
-const basicLightbox = require('basiclightbox')
+import { getAPI } from './js/apiService.js';
+const basicLightbox = require('basiclightbox');
+import './../node_modules/basiclightbox/dist/basicLightbox.min.css';
 
 const refs = {
     input: document.querySelector('input'),
