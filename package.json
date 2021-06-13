@@ -17,7 +17,7 @@
   "author": "Maksym Leskovets <leskovecmaksim@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https:///maksar24.github.io/goit-js-hw-13-image-finder/issues"
+    "url": "https://maksar24.github.io/goit-js-hw-13-image-finder/issues"
   },
   "devDependencies": {
     "@pnotify/core": "^5.2.0",
